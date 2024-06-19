@@ -33,22 +33,22 @@ Una vez dentro, y dependiendo de la opción seleccionada utilizaremos los comand
 
 - K8s:
 
-> minikube start
+    minikube start
 
-> helm install app-chart .
+    helm install app-chart .
 
 
 - Charts: 
 
-> minikube start
+    minikube start
 
-> kubectl apply -f .
+    kubectl apply -f .
 
 - Terraform:
 
-> terraform init
+    terraform init
 
-> terraform apply
+    terraform apply
 
 
 ## Estructura del Proyecto
