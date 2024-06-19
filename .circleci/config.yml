@@ -1,7 +1,7 @@
 #Circleci config yaml file
 version: 2.1
 defaults: &defaults
-  working_directory: ~/repo
+  working_directory: ~/repo/test
 orbs:
   # using the latest pyhon orb
   python: circleci/python@2.1.1
