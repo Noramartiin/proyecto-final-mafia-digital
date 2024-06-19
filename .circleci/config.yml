@@ -1,0 +1,77 @@
+#Circleci config yaml file
+version: 2.1
+defaults: &defaults
+  working_directory: ~/repo
+orbs:
+  # using the latest pyhon orb
+  python: circleci/python@2.1.1
+
+jobs:
+  test:
+    <<: *defaults
+    executor: python/default
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+          - v1-dependencies-{{ checksum "requirements.txt" }}
+          # fallback to using the latest cache if no exact match is found
+          - v1-dependencies-
+      - run:
+          name: Install dependencies
+          command: |
+            python -m venv venv
+            . venv/bin/activate
+            pip install -r requirements.txt
+            pip install pytest
+            pip install pylint
+      - run:
+          name: Run tests
+          command: |
+            . venv/bin/activate
+            pytest
+            pytest --version
+            pytest --cov --cov-report=xml
+            pylint --exit-zero app
+            pylint --exit-zero ./**/*.py --output-format=json:lint.json
+            pytest --junitxml=app/tests/test-results.xml
+      - store_test_results:
+          path: app/tests
+      - save_cache:
+          paths:
+            - ./venv
+          key: v1-dependencies-{{ checksum "requirements.txt" }}
+  
+  build_and_push_docker:
+    <<: *defaults
+    executor: python/default
+    steps:
+      - checkout # checkout source code to working directory
+      - restore_cache:
+          keys:
+            - docker-layer-cache-{{ .Branch }}-{{ checksum "Dockerfile" }}
+            - docker-layer-cache-
+      # set up docker
+      - setup_remote_docker
+      - run:
+          name: Build Docker Image
+          command: 
+            docker buildx build . -t hjalmarb/final_project:latest 
+      - run:
+          name: Push to Docker Registry
+          command: |
+            docker login --username $DOCKER_USER --password $DOCKER_PASSWORD
+            docker push hjalmarb/final_project:latest
+      - save_cache:
+          paths:
+            - /var/lib/docker
+          key: docker-layer-cache-{{ .Branch }}-{{ checksum "Dockerfile" }}
+      
+      
+
+workflows:
+  version: 2
+  lint_test-build:
+    jobs:
+       - test
+       - build_and_push_docker
