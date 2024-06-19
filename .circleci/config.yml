@@ -29,9 +29,9 @@ jobs:
           name: Run tests
           command: |
             . venv/bin/activate
-            pytest
+            pytest -c test/pytest.ini
             pytest --version
-            pytest --cov --cov-report=xml
+            pytest --cov --cov-report=xml 
             pylint --exit-zero ./test/app
             pylint --exit-zero ./test/**/*.py --output-format=json:lint.json
             pytest --junitxml=./test/app/tests/test-results.xml
