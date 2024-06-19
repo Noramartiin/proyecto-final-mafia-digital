@@ -56,7 +56,7 @@ jobs:
       - run:
           name: Build Docker Image
           command: 
-            docker buildx build . -t hjalmarb/final_project:latest 
+            docker buildx build ./test -t hjalmarb/final_project:latest 
       - run:
           name: Push to Docker Registry
           command: |
