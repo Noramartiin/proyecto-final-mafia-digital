@@ -49,7 +49,7 @@ jobs:
       - checkout # checkout source code to working directory
       - restore_cache:
           keys:
-            - docker-layer-cache-{{ .Branch }}-{{ checksum "Dockerfile" }}
+            - docker-layer-cache-{{ .Branch }}-{{ checksum "./test/Dockerfile" }}
             - docker-layer-cache-
       # set up docker
       - setup_remote_docker
@@ -65,7 +65,7 @@ jobs:
       - save_cache:
           paths:
             - /var/lib/docker
-          key: docker-layer-cache-{{ .Branch }}-{{ checksum "Dockerfile" }}
+          key: docker-layer-cache-{{ .Branch }}-{{ checksum "./test/Dockerfile" }}
       
       
 
