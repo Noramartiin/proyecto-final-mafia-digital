@@ -13,7 +13,7 @@ resource "aws_launch_template" "asg-template-t2micro" {
   vpc_security_group_ids = [aws_security_group.sg_instance.id]
 
   iam_instance_profile {
-    name = aws_iam_instance_profile.elb_autoscaling_profile.name
+    name = aws_iam_instance_profile.lb_autoscaling_app_profile.name
   }
 }
 
