@@ -27,7 +27,7 @@ Para comenzar necesitas crear el repositorio. Una vez clonado y con los requisit
 
 Como comentamos anteriormente, existen varias formas de desplegar nuestra aplicación. Una vez decidida la herramienta que queremos utilizar, entramos a su carpeta.
 
- cd <CARPETA_SELECCIONADA>
+>cd <CARPETA_SELECCIONADA>
 
 Una vez dentro, y dependiendo de la opción seleccionada utilizaremos los comandos correspondientes
 
