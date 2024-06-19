@@ -32,11 +32,11 @@ jobs:
             pytest
             pytest --version
             pytest --cov --cov-report=xml
-            pylint --exit-zero app
+            pylint --exit-zero ./test/app
             pylint --exit-zero ./**/*.py --output-format=json:lint.json
-            pytest --junitxml=app/tests/test-results.xml
+            pytest --junitxml=./test/app/tests/test-results.xml
       - store_test_results:
-          path: app/tests
+          path: ./test/app/tests
       - save_cache:
           paths:
             - ./venv
