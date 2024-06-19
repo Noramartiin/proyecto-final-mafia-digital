@@ -1,7 +1,7 @@
 #Circleci config yaml file
 version: 2.1
 defaults: &defaults
-  working_directory: ~/repo/test
+  working_directory: ~/repo
 orbs:
   # using the latest pyhon orb
   python: circleci/python@2.1.1
@@ -14,7 +14,7 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-          - v1-dependencies-{{ checksum "requirements.txt" }}
+          - v1-dependencies-{{ checksum "./test/requirements.txt" }}
           # fallback to using the latest cache if no exact match is found
           - v1-dependencies-
       - run:
@@ -22,7 +22,7 @@ jobs:
           command: |
             python -m venv venv
             . venv/bin/activate
-            pip install -r requirements.txt
+            pip install -r ./test/requirements.txt
             pip install pytest
             pip install pylint
       - run:
@@ -40,7 +40,7 @@ jobs:
       - save_cache:
           paths:
             - ./venv
-          key: v1-dependencies-{{ checksum "requirements.txt" }}
+          key: v1-dependencies-{{ checksum "./test/requirements.txt" }}
   
   build_and_push_docker:
     <<: *defaults
