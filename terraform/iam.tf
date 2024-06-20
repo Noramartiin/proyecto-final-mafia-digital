@@ -2,8 +2,8 @@
 # IAM
 # ----------------------------------------------------------------------------------------------------------------------
 
-resource "aws_iam_role" "elb_autoscaling_role" {
-  name = "elb-autoscaling-role"
+resource "aws_iam_role" "lb_autoscaling_app_role" {
+  name = "lb-autoscaling-app-role"
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17",
@@ -19,9 +19,9 @@ resource "aws_iam_role" "elb_autoscaling_role" {
   })
 }
 
-resource "aws_iam_policy" "elb_autoscaling_policy" {
-  name        = "ELB-AutoScaling-Policy"
-  description = "Policy to allow Auto Scaling Group to interact with ELB"
+resource "aws_iam_policy" "lb_autoscaling_app_policy" {
+  name        = "LB-AutoScaling-App-Policy"
+  description = "Policy to allow Auto Scaling Group to interact with LB"
   policy = jsonencode({
     Version = "2012-10-17",
     Statement = [
@@ -45,12 +45,12 @@ resource "aws_iam_policy" "elb_autoscaling_policy" {
   })
 }
 
-resource "aws_iam_role_policy_attachment" "elb_autoscaling_attach" {
-  role       = aws_iam_role.elb_autoscaling_role.name
-  policy_arn = aws_iam_policy.elb_autoscaling_policy.arn
+resource "aws_iam_role_policy_attachment" "lb_autoscaling_app_attach" {
+  role       = aws_iam_role.lb_autoscaling_app_role.name
+  policy_arn = aws_iam_policy.lb_autoscaling_app_policy.arn
 }
 
-resource "aws_iam_instance_profile" "elb_autoscaling_profile" {
-  name = "elb-autoscaling-instance-profile"
-  role = aws_iam_role.elb_autoscaling_role.name
+resource "aws_iam_instance_profile" "lb_autoscaling_app_profile" {
+  name = "lb-autoscaling-app-profile"
+  role = aws_iam_role.lb_autoscaling_app_role.name
 }
