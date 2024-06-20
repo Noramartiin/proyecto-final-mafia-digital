@@ -19,6 +19,7 @@ La aplicación incluye un conjunto de pruebas automatizadas que se ejecutan con 
 - Docker.
 - Cuenta de CircleCI configurada.
 - Acceso a un clúster de Kubernetes.
+- kubectl y helm cli
 - Terraform instalado.
 
 ## Instalación y Despliegues
@@ -35,14 +36,14 @@ Una vez dentro, y dependiendo de la opción seleccionada utilizaremos los comand
 
         minikube start
 
-        helm install app-chart .
+        kubectl apply -f .
 
 
-- Charts: 
+- Helm Charts: 
 
         minikube start
 
-        kubectl apply -f .
+        helm install app-chart .
 
 - Terraform:
 
@@ -83,9 +84,9 @@ A continuación se describe la estructura del proyecto y el propósito de cada c
 
 **Archivos**:
 
-- deployment.yaml: Define el despliegue de la aplicación, especificando detalles como el número de réplicas, la imagen del contenedor, y las configuraciones de actualización.
-
-- service.yaml: Configura el servicio de Kubernetes que expone la aplicación, permitiendo que otros servicios o usuarios accedan a ella.
+- deployment.yml: Define el despliegue de la aplicación, especificando detalles como el número de réplicas, la imagen del contenedor, y las configuraciones de actualización.
+- namespace.yml : Crea un namespace para la app
+- service.yml: Configura el servicio de Kubernetes que expone la aplicación, permitiendo que otros servicios o usuarios accedan a ella.
 
 
 ### Terraform
